@@ -61,12 +61,18 @@ gpa.process <- function(epoch.file, frequency) {
   }
   j <- 2
   k <- 121
-  while (i < length(data[,1])) {
-    data$bed.calc1[i] <- median(data$calc1[i:j])
+  while (k < length(data[,1])) {
+    data$bed.calc1[i] <- median(data$calc1[j:k])
     if (data$bed.calc1[i] < 0.1) data$bed[i] <- TRUE
     i <- i + 1
     j <- j + 1
     k <- k + 1
+  }
+  while (i < length(data[,1])) {
+    data$bed.calc1[i] <- median(data$calc1[j:(length(data[,1]))])
+    if (data$bed.calc1[i] < 0.1) data$bed[i] <- TRUE
+    i <- i + 1
+    j <- j + 1
   }
   
   ## 1-hour Average Movement*SVM
@@ -213,7 +219,12 @@ gpa.summary <- function(data, frequency) {
         while (temp$bed[i]) {
           i <- i + 1
         }
-        if (!any(temp$bed[i:(i+frequency/5)])) {
+        if ((i+frequency/5) > length(temp[,1])) {
+          risetime <- temp$dateTime[length(temp[,1])]
+          sleeping <- FALSE
+          sleep.count <- sum(temp$sleep[saved:i]) + sleep.count
+        }
+        else if (!any(temp$bed[i:(i+frequency/5)])) {
           sleep.count <- sleep.count + sum(temp$sleep[1:i])
           risetime <- temp$dateTime[i]
           sleeping <- FALSE
@@ -226,10 +237,16 @@ gpa.summary <- function(data, frequency) {
     else {
       i <- saved + 1
       while (sleeping) {
+        
         while (temp$bed[i]) {
           i <- i + 1
         }
-        if (!any(temp$bed[i:(i+frequency/5)])) {
+        if ((i+frequency/5) > length(temp[,1])) {
+          risetime <- temp$dateTime[length(temp[,1])]
+          sleeping <- FALSE
+          sleep.count <- sum(temp$sleep[saved:i])
+        }
+        else if (!any(temp$bed[i:(i+frequency/5)])) {
           risetime <- temp$dateTime[i]
           sleeping <- FALSE
           sleep.count <- sum(temp$sleep[saved:i])
