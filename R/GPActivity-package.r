@@ -7,7 +7,7 @@
 #' @docType package
 #' @import plyr
 
-#' Process the epoch file into a data frame and perform calculations
+# Process the epoch file into a data frame and perform calculations
 #' @export
 gpa.process <- function(epoch.file, frequency) {
   
@@ -170,7 +170,7 @@ gpa.process <- function(epoch.file, frequency) {
   data
 }
 
-#' Generate a table of daily sleep summaries and energy expenditure
+# Generate a table of daily sleep summaries and energy expenditure
 #' @export
 gpa.summary <- function(data) {
   results <- data.frame()
