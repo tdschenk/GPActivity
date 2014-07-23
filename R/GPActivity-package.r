@@ -213,7 +213,7 @@ gpa.summary <- function(data, frequency) {
         while (temp$bed[i]) {
           i <- i + 1
         }
-        if (!any(temp$bed[(i:i+frequency/5)])) {
+        if (!any(temp$bed[i:(i+frequency/5)])) {
           sleep.count <- sleep.count + sum(temp$sleep[1:i])
           risetime <- temp$dateTime[i]
           sleeping <- FALSE
