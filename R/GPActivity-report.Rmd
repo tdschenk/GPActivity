@@ -21,4 +21,7 @@ summary <- GPActivity::gpa.summary(df, 100)
 kable(summary, "html")
 ```
 
-**Figure 2**: 
+**Figure 2**: Daily graphs of energy expenditure
+```{r, echo=FALSE}
+GPActivity::gpa.activity.plot(df)
+```

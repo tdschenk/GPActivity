@@ -5,7 +5,7 @@
 #'
 #' @name GPActivity
 #' @docType package
-#' @import plyr
+#' @import plyr ggplot2
 
 # Process the epoch file into a data frame and perform calculations
 #' @export
@@ -270,7 +270,7 @@ gpa.summary <- function(data, frequency) {
   results
 }
 
-#'
+# Daily graphs of energy expenditure
 #' @export
 gpa.activity.plot <- function(data) {
   data$day <- substring(data$dateTime, 1 , 10)
