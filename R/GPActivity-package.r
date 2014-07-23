@@ -172,7 +172,7 @@ gpa.process <- function(epoch.file, frequency) {
 
 # Generate a table of daily sleep summaries and energy expenditure
 #' @export
-gpa.summary <- function(data) {
+gpa.summary <- function(data, frequency) {
   results <- data.frame()
   data$day <- substring(data$dateTime, 1 , 10)
   days <- unique(data$day)
