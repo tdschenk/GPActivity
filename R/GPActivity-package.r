@@ -18,6 +18,7 @@ gpa.process <- function(epoch.file, frequency) {
                          "V4" = "z.mean", "V5" = "lux", "V6" = "button",
                          "V7" = "temp", "V8" = "svm", "V9" = "x.sd",
                          "V10" = "y.sd", "V11" = "z.sd", "V12" = "light"))
+  data$dateTime <- as.POSIXct(format(data$dateTime, format = "%Y-%m-%d %H:%M:%S"))
   
   ## Activity Column
   i <- 2
@@ -257,13 +258,13 @@ gpa.summary <- function(data, frequency) {
     }
     elapsed.sleep <- as.numeric(difftime(risetime, bedtime))
     
-    results <- rbind(results, data.frame(date = days[d], 
-                                         bedtime = bedtime,
-                                         risetime = risetime,
-                                         elapsed.sleep.time = elapsed.sleep,
-                                         actual.sleep.time = sleep.count/60,
-                                         sleep.efficiency = (sleep.count/60)/elapsed.sleep,
-                                         energy.expenditure = energy))
+    results <- rbind(results, data.frame(Date = days[d], 
+                                         Bedtime = bedtime,
+                                         Risetime = risetime,
+                                         Time.In.Bed = elapsed.sleep,
+                                         Time.Slept = sleep.count/60,
+                                         Sleep.Efficiency = (sleep.count/60)/elapsed.sleep,
+                                         Energy.Expenditure = energy))
     d <- d + 1
   }
   results
@@ -271,4 +272,12 @@ gpa.summary <- function(data, frequency) {
 
 #'
 #' @export
-#gpa.activity
+gpa.activity.plot <- function(data) {
+  data$day <- substring(data$dateTime, 1 , 10)
+  ggplot(data, aes(substr(dateTime, 12, 16), y = met.min), group=day) +
+    geom_line(aes(group=day)) +
+    facet_wrap(~day, ncol=2, scales = "free_x") + 
+    xlab("Time") +
+    ylab("MET/min") + 
+    scale_x_discrete(breaks = c())
+}
