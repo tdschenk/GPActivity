@@ -22,9 +22,9 @@ kable(summary, format = "pandoc")
 ```{r, echo=FALSE, fig.width = 7, fig.height = 8}
 GPActivity::gpa.activity.plot(df)
 ```
-**Figure 2**: Daily graphs of energy expenditure   
+**Figure 2**: Daily graphs of energy expenditure (MET/min)   
    
 ```{r, echo=FALSE, fig.width = 7, fig.height = 8}
 GPActivity::gpa.lighttemp.plot(df)
 ```
-**Figure 3**: Daily graphs of temperature and light exposure  
+**Figure 3**: Daily graphs of temperature (Celsius) and light exposure (Lux)  
