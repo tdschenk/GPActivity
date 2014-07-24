@@ -293,6 +293,7 @@ gpa.lighttemp.plot <- function(data) {
     geom_line(aes(y = light, group = day, colour = "light")) +
     geom_line(aes(y = temp2, group = day, colour = "temp2")) + 
     facet_wrap(~day, ncol = 2) + 
+    theme(legend.position="bottom") + 
     xlab("") +
     ylab("") + 
     scale_color_manual(values = c("gold", "red"), name = "Variable", breaks = c("light", "temp2"),
