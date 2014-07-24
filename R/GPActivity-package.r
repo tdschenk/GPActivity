@@ -279,8 +279,9 @@ gpa.activity.plot <- function(data) {
   ggplot(data, aes(substr(dateTime, 12, 16), y = met.min), group=day) +
     geom_area(aes(group = day)) +
     facet_wrap(~day, ncol = 2) + 
-    xlab("") +
-    ylab("MET/min") + 
+    theme(axis.line=element_blank(),axis.text.x=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank()) + 
     scale_x_discrete(breaks = c())
 }
 
@@ -293,11 +294,12 @@ gpa.lighttemp.plot <- function(data) {
     geom_line(aes(y = light, group = day, colour = "light")) +
     geom_line(aes(y = temp2, group = day, colour = "temp2")) + 
     facet_wrap(~day, ncol = 2) + 
-    theme(legend.position="bottom") + 
-    xlab("") +
-    ylab("") + 
     scale_color_manual(values = c("gold", "red"), name = "Variable", breaks = c("light", "temp2"),
-                        labels = c("Light", "Temperature")) +
+                       labels = c("Light", "Temperature")) +
+    theme(axis.line=element_blank(),axis.text.x=element_blank(),
+         axis.text.y=element_blank(),axis.ticks=element_blank(),
+         axis.title.x=element_blank(),
+         axis.title.y=element_blank(),legend.position="bottom") +
     scale_x_discrete(breaks = c()) + 
     scale_y_discrete(breaks = c())
 }
