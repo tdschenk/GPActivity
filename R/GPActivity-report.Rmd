@@ -1,7 +1,7 @@
 ---
 title: "General Physical Activity Report"
 author: "MEI Research, Ltd."
-output: pdf_document
+output: word_document
 ---
 
 This is an automatically generated report for GENEActiv epochal data.   
