@@ -279,7 +279,7 @@ gpa.activity.plot <- function(data) {
   ggplot(data, aes(substr(dateTime, 12, 16), y = met.min), group=day) +
     geom_line(aes(group = day)) +
     facet_wrap(~day, ncol = 2) + 
-    xlab("Time") +
+    xlab("") +
     ylab("MET/min") + 
     scale_x_discrete(breaks = c())
 }
