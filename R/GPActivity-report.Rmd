@@ -1,32 +1,30 @@
 ---
 title: "General Physical Activity Report"
 author: "MEI Research, Ltd."
-date: "Wednesday, July 23, 2014"
-output: pdf_document
+output: word_document
 ---
 
 This is an automatically generated report for GENEActiv epochal data.  
 
 
 **Figure 1**: Daily summary of sleep times/efficiency and energy expenditure  
-```{r include=FALSE, cache=FALSE}
+```{r include=FALSE, cache=FALSE, fig.width = 4}
 library(devtools)
 library(knitr)
 install_github("GPActivity", username = "tdschenk", ref = "master")
 df <- GPActivity::gpa.process("C:/Users/Tyler/Documents/GENEActiv/Data/60sJS.csv", 100)
-summary <- GPActivity::gpa.summary(df, 100)
+summary <- GPActivity::gpa.summary.table(df, 100)
 ```
   
-```{r kable, results = 'asis'}
-kable(summary)
+```{r kable, results = 'asis', echo = FALSE}
+kable(summary, format = "pandoc")
 ```
-  
   
 **Figure 2**: Daily graphs of energy expenditure
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width = 7, fig.height = 8}
 GPActivity::gpa.activity.plot(df)
 ```
 
 **Figure 3**: Daily graphs of temperature and light exposure
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width = 7, fig.height = 8}
 GPActivity::gpa.lighttemp.plot(df)

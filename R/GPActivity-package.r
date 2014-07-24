@@ -267,6 +267,8 @@ gpa.summary.table <- function(data, frequency) {
                                          Energy.Expenditure = energy))
     d <- d + 1
   }
+  results$Bedtime <- substring(results$Bedtime, 12, 16)
+  results$Risetime <- substring(results$Risetime, 12, 16)
   results
 }
 
@@ -291,8 +293,8 @@ gpa.lighttemp.plot <- function(data) {
     geom_line(aes(y = light, group = day, colour = "light")) +
     geom_line(aes(y = temp2, group = day, colour = "temp2")) + 
     facet_wrap(~day, ncol = 2) + 
-    xlab("Time") +
-    ylab("Light/Temp") + 
+    xlab("") +
+    ylab("") + 
     scale_color_manual(values = c("gold", "red"), name = "Variable", breaks = c("light", "temp2"),
                         labels = c("Light", "Temperature")) +
     scale_x_discrete(breaks = c()) + 
