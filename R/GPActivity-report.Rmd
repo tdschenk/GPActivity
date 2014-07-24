@@ -1,8 +1,8 @@
 ---
-title: "Untitled"
+title: "General Physical Activity Report"
 author: "MEI Research, Ltd."
 date: "Wednesday, July 23, 2014"
-output: html_document
+output: pdf_document
 ---
 
 This is an automatically generated report for GENEActiv epochal data.  
@@ -18,10 +18,15 @@ summary <- GPActivity::gpa.summary(df, 100)
 ```
   
 ```{r kable, results = 'asis'}
-kable(summary, "html")
+kable(summary)
 ```
-
+  
+  
 **Figure 2**: Daily graphs of energy expenditure
 ```{r, echo=FALSE}
 GPActivity::gpa.activity.plot(df)
 ```
+
+**Figure 3**: Daily graphs of temperature and light exposure
+```{r, echo=FALSE}
+GPActivity::gpa.lighttemp.plot(df)

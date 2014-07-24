@@ -179,7 +179,7 @@ gpa.process <- function(epoch.file, frequency) {
 
 # Generate a table of daily sleep summaries and energy expenditure
 #' @export
-gpa.summary <- function(data, frequency) {
+gpa.summary.table <- function(data, frequency) {
   results <- data.frame()
   data$day <- substring(data$dateTime, 1 , 10)
   days <- unique(data$day)
@@ -273,11 +273,28 @@ gpa.summary <- function(data, frequency) {
 # Daily graphs of energy expenditure
 #' @export
 gpa.activity.plot <- function(data) {
-  data$day <- substring(data$dateTime, 1 , 10)
+  data$day <- substring(data$dateTime, 1, 10)
   ggplot(data, aes(substr(dateTime, 12, 16), y = met.min), group=day) +
-    geom_line(aes(group=day)) +
-    facet_wrap(~day, ncol=2) + 
+    geom_line(aes(group = day)) +
+    facet_wrap(~day, ncol = 2) + 
     xlab("Time") +
     ylab("MET/min") + 
     scale_x_discrete(breaks = c())
+}
+
+# Daily graphs of light and temperature
+#' @export
+gpa.lighttemp.plot <- function(data) {
+  data$day <- substring(data$dateTime, 1, 10)
+  data$temp2 <- data$temp * 8
+  ggplot(data, aes(substr(dateTime, 12, 16)), group=day) +
+    geom_line(aes(y = light, group = day, colour = "light")) +
+    geom_line(aes(y = temp2, group = day, colour = "temp2")) + 
+    facet_wrap(~day, ncol = 2) + 
+    xlab("Time") +
+    ylab("Light/Temp") + 
+    scale_color_manual(values = c("gold", "red"), name = "Variable", breaks = c("light", "temp2"),
+                        labels = c("Light", "Temperature")) +
+    scale_x_discrete(breaks = c()) + 
+    scale_y_discrete(breaks = c())
 }
