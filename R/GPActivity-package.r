@@ -324,7 +324,12 @@ gpa.piecharts <- function(counts) {
     geom_bar(stat="identity", position="fill") +
     coord_polar(theta="y") +
     facet_wrap(~Date, ncol = 2) +
-    scale_fill_discrete(name = "Intensity") + 
+    scale_fill_manual(name = "Intensity", values = c(sedentary = "lightblue",
+                                                     light = "yellow",
+                                                     moderate = "orange",
+                                                     vigorous = "red",
+                                                     no.wear = "black",
+                                                     sleep = "brown")) + 
     theme(panel.border = element_blank(),
           legend.key = element_blank(),
           axis.ticks = element_blank(),

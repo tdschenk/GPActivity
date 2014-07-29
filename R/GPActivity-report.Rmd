@@ -19,20 +19,20 @@ sleep <- GPActivity::gpa.sleepsummary(df, 100)
 print <- sleep
 print$Bedtime <- substring(print$Bedtime, 12, 16)
 print$Risetime <- substring(print$Risetime, 12, 16)
-kable(sleep, format = "pandoc")
+kable(print, format = "pandoc")
 ```
   
-```{r, echo=FALSE, fig.width = 7, fig.height = 8}
+```{r, echo=FALSE, fig.width = 7, fig.height = 9.5}
 GPActivity::gpa.activity.plot(df)
 ```
 **Figure 2**: Daily graphs of energy expenditure (MET/min)   
    
-```{r, echo=FALSE, fig.width = 7, fig.height = 8}
+```{r, echo=FALSE, fig.width = 7, fig.height = 9.5}
 GPActivity::gpa.lighttemp.plot(df)
 ```
 **Figure 3**: Daily graphs of temperature (Celsius) and light exposure (Lux)  
 
-```{r, echo=FALSE, fig.width = 7, fig.height = 8}
+```{r, echo=FALSE, fig.width = 7, fig.height = 9.5}
 temp <- GPActivity::gpa.wakesummary(df, sleep)
 GPActivity::gpa.piecharts(temp)
 ```
