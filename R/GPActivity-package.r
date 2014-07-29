@@ -5,7 +5,7 @@
 #'
 #' @name GPActivity
 #' @docType package
-#' @import plyr ggplot2
+#' @import plyr ggplot2 reshape
 
 # Process the epoch file into a data frame and perform calculations
 #' @export
@@ -338,6 +338,15 @@ gpa.piecharts <- function(counts) {
           axis.text.x = element_blank(),
           axis.title.x = element_blank(),
           axis.title.y = element_blank())
+}
+
+# Table of activity intensity totals
+#' @export
+gpa.activity.totals <- function(counts) {
+  melted <- melt(counts, id.var = c("x", "Date"))
+  result <- cast(melted, Date + variable ~ x)
+  result$variable <- NULL
+  result
 }
 
 # Daily graphs of energy expenditure

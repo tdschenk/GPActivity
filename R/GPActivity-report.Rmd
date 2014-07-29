@@ -1,7 +1,7 @@
 ---
 title: "General Physical Activity Report"
 author: "MEI Research, Ltd."
-output: pdf_document
+output: word_document
 ---
 
 This is an automatically generated report for GENEActiv epochal data.   
@@ -22,18 +22,22 @@ print$Risetime <- substring(print$Risetime, 12, 16)
 kable(print, format = "pandoc")
 ```
   
-```{r, echo=FALSE, fig.width = 7, fig.height = 9.5}
+```{r, echo=FALSE, fig.width = 7, fig.height = 8}
 GPActivity::gpa.activity.plot(df)
 ```
 **Figure 2**: Daily graphs of energy expenditure (MET/min)   
    
-```{r, echo=FALSE, fig.width = 7, fig.height = 9.5}
+```{r, echo=FALSE, fig.width = 7, fig.height = 8}
 GPActivity::gpa.lighttemp.plot(df)
 ```
 **Figure 3**: Daily graphs of temperature (Celsius) and light exposure (Lux)  
 
-```{r, echo=FALSE, fig.width = 7, fig.height = 9.5}
-temp <- GPActivity::gpa.wakesummary(df, sleep)
-GPActivity::gpa.piecharts(temp)
+```{r, echo=FALSE, fig.width = 7, fig.height = 8}
+counts <- GPActivity::gpa.wakesummary(df, sleep)
+GPActivity::gpa.piecharts(counts)
 ```
 **Figure 4**: Daily charts of activity intensities
+
+```{r kable, results = 'as.is', echo=FALSE}
+GPActivity::gpa.activity.totals(counts)
+```
