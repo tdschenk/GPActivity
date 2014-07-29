@@ -264,7 +264,7 @@ gpa.sleepsummary <- function(data, frequency) {
                                          Time.In.Bed = elapsed.sleep,
                                          Time.Slept = sleep.count/60,
                                          Sleep.Efficiency = (sleep.count/60)/elapsed.sleep,
-                                         Energy.Expenditure = energy))
+                                         Total.MET.min = energy))
     d <- d + 1
   }
   
@@ -323,7 +323,7 @@ gpa.piecharts <- function(counts) {
   ggplot(data=counts, aes(x=factor(1), y=freq, fill=x)) +
     geom_bar(stat="identity", position="fill") +
     coord_polar(theta="y") +
-    facet_wrap(~Date, ncol = 4) +
+    facet_wrap(~Date, ncol = 2) +
     scale_fill_discrete(name = "Intensity") + 
     theme(panel.border = element_blank(),
           legend.key = element_blank(),
