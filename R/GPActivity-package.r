@@ -185,7 +185,7 @@ gpa.sleepsummary <- function(data, frequency) {
   days <- unique(data$day)
   d <- 1
   
-  while (d <= length(days)) {
+  while (d < length(days)) {
     sleep.count <- 0
     # Find bedtime
     temp <- subset(data, day == days[d])
