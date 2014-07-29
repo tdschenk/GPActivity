@@ -177,15 +177,15 @@ gpa.process <- function(epoch.file, frequency) {
   data
 }
 
-# Generate a table of daily sleep summaries and energy expenditure
+# Generate table of daily sleep times, energy expenditure, and activity classification
 #' @export
-gpa.summary.table <- function(data, frequency) {
+gpa.sleepsummary <- function(data, frequency) {
   results <- data.frame()
   data$day <- substring(data$dateTime, 1 , 10)
   days <- unique(data$day)
   d <- 1
   
-  while (d < length(days)) {
+  while (d <= length(days)) {
     sleep.count <- 0
     # Find bedtime
     temp <- subset(data, day == days[d])
@@ -267,9 +267,72 @@ gpa.summary.table <- function(data, frequency) {
                                          Energy.Expenditure = energy))
     d <- d + 1
   }
-  results$Bedtime <- substring(results$Bedtime, 12, 16)
-  results$Risetime <- substring(results$Risetime, 12, 16)
+  
   results
+}
+
+#
+#' @export
+gpa.wakesummary <- function(data, sleep) {  
+  data$day <- substring(data$dateTime, 1 , 10)
+  days <- unique(data$day)
+  results <- data.frame(Date = sleep$Date)
+  results$Time.Awake[1] <- as.numeric(difftime(sleep$Bedtime[1],
+                                               data$dateTime[1]), units = "hours")
+  i <- 2
+  while (i <= length(sleep[,1])) {
+    results$Time.Awake[i] <- (24 - as.numeric(sleep$Time.In.Bed[i]))
+    i <- i + 1
+  }
+  results <- rbind(results, data.frame(Date = days[length(days)], 
+                                       Time.Awake = as.numeric(difftime(sleep$Risetime[i-1],
+                                                                        data$dateTime[length(data[,1])])))) 
+  
+  i <- 1
+  while (i <= length(data[,1])) {
+    if (data$no.wear[i] == TRUE)
+      data$activity.level[i] <- "no.wear"
+    if (data$bed[i] == TRUE)
+      data$activity.level[i] <- "bed"
+    if (data$svm[i] > 2264)
+      data$activity.level[i] <- "vigorous"
+    else if (data$svm[i] > 678)
+      data$activity.level[i] <- "moderate"
+    else if (data$svm[i] > 483)
+      data$activity.level[i] <- "light"
+    else 
+      data$activity.level[i] <- "sedentary"
+    i <- i + 1
+  }
+  
+  i <- 1
+  counts <- data.frame()
+  while (i <= length(days)) {
+    temp <- subset(data, day == days[i])
+    levels <- count(temp$activity.level)
+    levels$Date <- days[i]
+    counts <- rbind(counts, levels)
+    i <- i + 1
+  }
+  counts
+}
+
+# Daily pie charts of activity levels
+#' @export
+gpa.piecharts <- function(counts) {
+  ggplot(data=counts, aes(x=factor(1), y=freq, fill=x)) +
+    geom_bar(stat="identity", position="fill") +
+    coord_polar(theta="y") +
+    facet_wrap(~Date, ncol = 4) +
+    scale_fill_discrete(name = "Intensity") + 
+    theme(panel.border = element_blank(),
+          legend.key = element_blank(),
+          axis.ticks = element_blank(),
+          axis.text.y = element_blank(),
+          panel.grid  = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank())
 }
 
 # Daily graphs of energy expenditure
@@ -297,9 +360,9 @@ gpa.lighttemp.plot <- function(data) {
     scale_color_manual(values = c("gold", "red"), name = "Variable: ", breaks = c("light", "temp2"),
                        labels = c("Light", "Temperature")) +
     theme(axis.line=element_blank(),axis.text.x=element_blank(),
-         axis.text.y=element_blank(),axis.ticks=element_blank(),
-         axis.title.x=element_blank(),
-         axis.title.y=element_blank(),legend.position="bottom") +
+          axis.text.y=element_blank(),axis.ticks=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),legend.position="bottom") +
     scale_x_discrete(breaks = c()) + 
     scale_y_discrete(breaks = c())
 }
