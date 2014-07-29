@@ -274,6 +274,8 @@ gpa.sleepsummary <- function(data, frequency) {
 #
 #' @export
 gpa.wakesummary <- function(data, sleep) {  
+  sleep$Bedtime <- substring(sleep$Bedtime, 12, 16)
+  sleep$Risetime <- substring(sleep$Risetime, 12, 16)
   data$day <- substring(data$dateTime, 1 , 10)
   days <- unique(data$day)
   results <- data.frame(Date = sleep$Date)
