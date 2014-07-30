@@ -6,7 +6,7 @@ output: pdf_document
 
 This is an automatically generated report for GENEActiv epochal data.   
   
-```{r include=FALSE, cache=FALSE, fig.width = 4}
+```{r include=FALSE, cache=FALSE}
 library(devtools)
 library(knitr)
 library(reshape)
@@ -39,7 +39,7 @@ GPActivity::gpa.piecharts(counts)
 ```
 **Figure 4**: Daily charts of activity intensities
 
-```{r, results = 'as.is', echo=FALSE}
+```{r, results = 'asis', echo=FALSE}
 print <- GPActivity::gpa.activity.totals(counts)
 print[is.na(print)] <- 0
 kable(print, format = "pandoc")

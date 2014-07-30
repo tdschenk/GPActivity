@@ -323,7 +323,7 @@ gpa.piecharts <- function(counts) {
   ggplot(data=counts, aes(x=factor(1), y=freq, fill=x)) +
     geom_bar(stat="identity", position="fill") +
     coord_polar(theta="y") +
-    facet_wrap(~Date, ncol = 2) +
+    facet_wrap(~Date, ncol = 3) +
     scale_fill_manual(name = "Intensity", values = c(sedentary = "lightblue",
                                                      light = "yellow",
                                                      moderate = "orange",
