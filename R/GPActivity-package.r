@@ -343,10 +343,9 @@ gpa.piecharts <- function(counts) {
 # Table of activity intensity totals
 #' @export
 gpa.activity.totals <- function(counts) {
-  results <- data.frame()
   melted <- melt(counts, id.var = c("x", "Date"))
   result <- cast(melted, Date + variable ~ x)
-  result$variable <- NULL
+  result <- subset(results, select = c("Date", "light", "moderate", "sedentary", "vigorous"))
   result
 }
 
